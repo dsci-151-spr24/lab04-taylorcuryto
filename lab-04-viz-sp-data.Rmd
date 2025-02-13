@@ -1,5 +1,6 @@
 ---
 title: "Lab 04 - La Quinta is Spanish for next to Denny's, Pt. 1"
+author: "Taylor Curyto"
 subtitle: "Visualizing spatial data"
 output: 
   tufte::tufte_html:
