@@ -112,11 +112,16 @@ We would like to limit our analysis to Denny's and La Quinta locations in the Un
     Are there any La Quinta's locations outside of the US?
     If so, which countries?
     What about Denny's?
+    
+***There are La Quinta locations outside the US but they are mostly located in America. They're located in Mexico, Canada, China, New Zealand, Turkey, Ecuador, etc.
+Dennys is only located in the US. ***
 
 4.  Now take a look at the data.
     What would be some ways of determining whether or not either establishment has any locations outside the US using just the data (and not the websites).
     Don't worry about whether you know how to implement this, just brainstorm some ideas.
     Write down at least one as your answer, but you're welcomed to write down a few options too.
+    
+***We can use the State variable to determine whether a location is in the US. Specifically by comparing the state listed to a database of states in the US.***
 
 We will determine whether or not the establishment has a location outside the US using the `state` variable in the `dennys` and `laquinta` datasets.
 We know exactly which states are in the US, and we have this information in the `states` dataframe we loaded.
@@ -131,6 +136,7 @@ We know exactly which states are in the US, and we have this information in the 
 dennys %>%
   filter(!(state %in% states$abbreviation))
 ```
+***There are no dennys locations outside the US in our data.***
 
 6.  Add a country variable to the Denny's dataset and set all observations equal to `"United States"`. Remember, you can use the `mutate` function for adding a variable. Make sure to save the result of this as `dennys` again so that the stored data frame contains the new variable going forward.
 
@@ -139,13 +145,18 @@ We don't need to tell R how many times to repeat the character string "United St
 ```
 
 ```{r}
-dennys %>%
+dennys <- dennys %>%
   mutate(country = "United States")
 ```
 
 7.  Find the La Quinta locations that are outside the US, and figure out which country they are in.
     This might require some googling.
     Take notes, you will need to use this information in the next exercise.
+    
+```{r}
+laquinta <- laquinta %>%
+  mutate(country = "United States")
+```
 
 8.  Add a country variable to the La Quinta dataset.
     Use the `case_when` function to populate this variable.
@@ -153,14 +164,16 @@ dennys %>%
     Here is some starter code to get you going:
 
 ```{r eval = FALSE}
-laquinta %>%
+laquinta <- laquinta %>%
   mutate(country = case_when(
     state %in% state.abb     ~ "United States",
     state %in% c("ON", "BC") ~ "Canada",
     state == "ANT"           ~ "Colombia",
-    ...                      # fill in the rest
+    state %in% c("AG", "QR", "CH", "NL", "VE", "PU")~ "Mexico",
+    state == "FM"           ~ "Honduras"
   ))
 ```
+
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
