@@ -188,6 +188,22 @@ laquinta <- laquinta %>%
 
 9.  Which states have the most and fewest Denny's locations? What about La Quinta? Is this surprising? Why or why not?
 
+```{r}
+dennys %>%
+  group_by(state) %>%
+  count() %>%
+  arrange(desc(n))
+```
+***California has the most Dennys locations while Delaware has the least. This isn't surprising because of the popularity of the states and the size also.*** 
+
+```{r}
+laquinta %>%
+  group_by(state) %>%
+  count() %>%
+  arrange(desc(n))
+```
+***Texas has the most La Quinta locations while Maine has the least. This isn't surprising because of the population of the states and the size also.***
+
 Next, let's calculate which states have the most Denny's locations *per thousand square miles*.
 This requires *joining* information from the frequency tables you created in Exercise 8 with information from the `states` data frame.
 
@@ -206,6 +222,24 @@ Before you move on the the next question, run the code above and take a look at 
 In the next exercise you will need to build on this pipe.
 
 10. Which states have the most Denny's locations per thousand square miles? What about La Quinta?
+
+```{r}
+dennys %>%
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation")) %>%
+  mutate(per_thousand = n/area*1000) %>%
+  arrange(desc(per_thousand))
+```
+
+```{r}
+laquinta %>%
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation")) %>%
+  mutate(per_thousand = n/area*1000) %>%
+  arrange(desc(per_thousand))
+```
+
+***District of Columbia has the most Dennys locations while Rhode Island has the most La Quinta locations.***
 
 Next, we put the two datasets together into a single data frame.
 However before we do so, we need to add an identifier variable.
@@ -240,9 +274,23 @@ You can also choose different themes to change the overall look of your plots, s
 11. Filter the data for observations in North Carolina only, and recreate the plot.
     You should also adjust the transparency of the points, by setting the `alpha` level, so that it's easier to see the overplotted ones.
     Visually, does Mitch Hedberg's joke appear to hold here?
+    
+```{r}
+dn_lq %>%
+  filter(state == "NC") %>%
+ggplot(dn_lq, mapping = aes(x = longitude, y = latitude, color = establishment)) +
+  geom_point(alpha = 0.5)
+```
 
 12. Now filter the data for observations in Texas only, and recreate the plot, with an appropriate `alpha` level.
     Visually, does Mitch Hedberg's joke appear to hold here?
+    
+```{r}
+dn_lq %>%
+  filter(state == "TX") %>%
+ggplot(dn_lq, mapping = aes(x = longitude, y = latitude, color = establishment)) +
+  geom_point(alpha = 0.1)
+```
 
 That's it for now!
 In the next lab we will take a more quantitative approach to answering these questions.
