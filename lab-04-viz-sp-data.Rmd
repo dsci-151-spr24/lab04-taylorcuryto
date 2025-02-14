@@ -3,6 +3,8 @@ title: "Lab 04 - La Quinta is Spanish for next to Denny's, Pt. 1"
 author: "Taylor Curyto"
 subtitle: "Visualizing spatial data"
 output: 
+  pdf_document:
+    latex_engine: xelatex
   tufte::tufte_html:
     tufte_variant: "envisioned"
     highlight: pygments
@@ -163,7 +165,7 @@ laquinta <- laquinta %>%
     You'll need to refer to your notes from Exercise 7 about which country the non-US locations are in.
     Here is some starter code to get you going:
 
-```{r eval = FALSE}
+```{r}
 laquinta <- laquinta %>%
   mutate(country = case_when(
     state %in% state.abb     ~ "United States",
@@ -181,7 +183,7 @@ Going forward we will work with the data from the United States only.
 All Denny's locations are in the United States, so we don't need to worry about them.
 However we do need to filter the La Quinta dataset for locations in United States.
 
-```{r, eval=FALSE}
+```{r}
 laquinta <- laquinta %>%
   filter(country == "United States")
 ```
